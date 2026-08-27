@@ -1,0 +1,9 @@
+{
+	"id": "obsidian-titler",
+	"name": "Obsidian Titler",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.0",
+	"description": "Names untitled notes from their first heading or opening words, with folder-scoped naming rules.",
+	"author": "fredrir",
+	"isDesktopOnly": false
+}
