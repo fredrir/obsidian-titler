@@ -25,7 +25,6 @@ export interface RuleListOptions {
 export function renderRuleList(options: RuleListOptions): void {
 	new Setting(options.container)
 		.setName("Folder rules")
-		.setDesc("Names notes in a folder differently. The deepest folder that matches a note decides its name.")
 		.setHeading()
 		.addButton((button) =>
 			button
@@ -37,7 +36,6 @@ export function renderRuleList(options: RuleListOptions): void {
 	if (options.rules.length === 0) {
 		options.container.createEl("p", {
 			cls: "titler-empty",
-			text: "No rules yet. Notes are named after their own title.",
 		});
 		return;
 	}

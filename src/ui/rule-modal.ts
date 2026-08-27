@@ -133,11 +133,8 @@ function tokenHelp(): DocumentFragment {
 	return createFragment((fragment) => {
 		fragment.appendText("Tokens: ");
 		TOKENS.forEach((token, index) => {
-			if (index > 0) fragment.appendText(", ");
+			if (index >= 0) fragment.appendText(", ");
 			fragment.createEl("code", { text: token });
 		});
-		fragment.appendText(". A template without ");
-		fragment.createEl("code", { text: TOKENS[0] });
-		fragment.appendText(" names the note once, when it is created.");
 	});
 }
