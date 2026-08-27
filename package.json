@@ -1,14 +1,16 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-titler",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Names untitled Obsidian notes from their first heading or opening words, with folder-scoped naming rules.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json",
-		"lint": "eslint ."
+		"build": "tsc --noEmit && node esbuild.config.mjs production",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"lint": "eslint .",
+		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
 	"license": "0-BSD",
@@ -22,6 +24,7 @@
 		"jiti": "^2.6.1",
 		"obsidian": "latest",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.59.1"
+		"typescript-eslint": "^8.59.1",
+		"vitest": "^3.2.4"
 	}
 }
