@@ -26,6 +26,11 @@ describe("parseSettings", () => {
 		expect(parseSettings({ excludedFolders: ["  a  ", "", 7] }).excludedFolders).toEqual(["a"]);
 	});
 
+	test("the title-prompt toggle only bends to a real boolean", () => {
+		expect(parseSettings({ skipTitlePrompt: false }).skipTitlePrompt).toBe(false);
+		expect(parseSettings({ skipTitlePrompt: "no" }).skipTitlePrompt).toBe(true);
+	});
+
 	test("partial rules are completed from the defaults", () => {
 		expect(parseSettings({ rules: [{ folder: "tmp" }] }).rules).toEqual([{ ...DEFAULT_RULE, folder: "tmp" }]);
 		expect(parseSettings({ rules: [null] }).rules).toEqual([DEFAULT_RULE]);

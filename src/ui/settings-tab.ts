@@ -35,6 +35,7 @@ export class TitlerSettingTab extends PluginSettingTab {
 			"Longer titles are cut at the last whole word that fits.",
 		);
 		this.addUntitledBase();
+		this.addSkipTitlePrompt();
 		this.addExcludedFolders();
 		this.addRules();
 	}
@@ -68,6 +69,21 @@ export class TitlerSettingTab extends PluginSettingTab {
 			.addText((text) =>
 				text.setValue(this.settings.untitledBase).onChange(async (value) => {
 					this.settings.untitledBase = value.trim() || DEFAULT_SETTINGS.untitledBase;
+					await this.commit();
+				}),
+			);
+	}
+
+	private addSkipTitlePrompt(): void {
+		new Setting(this.containerEl)
+			.setName("Skip the title prompt on new notes")
+			.setDesc(
+				"Start a new note in its body instead of its title, so you can write straight away. " +
+					"Titler names the note from what you wrote.",
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.settings.skipTitlePrompt).onChange(async (value) => {
+					this.settings.skipTitlePrompt = value;
 					await this.commit();
 				}),
 			);

@@ -26,11 +26,12 @@ export const DEFAULT_RULE: FolderRule = {
 };
 
 export const DEFAULT_SETTINGS: TitlerSettings = {
-	debounceMs: 700,
+	debounceMs: 300,
 	maxWords: 5,
 	maxLength: 60,
 	untitledBase: "Untitled",
 	excludedFolders: ["Transcripts", "Obsidian/Templates", "Obsidian/Attachments"],
+	skipTitlePrompt: true,
 	rules: [],
 };
 
@@ -52,6 +53,7 @@ export function parseSettings(value: unknown): TitlerSettings {
 		maxLength: readNumber(raw.maxLength, DEFAULT_SETTINGS.maxLength, SETTING_RANGES.maxLength),
 		untitledBase: readNonEmptyString(raw.untitledBase, DEFAULT_SETTINGS.untitledBase),
 		excludedFolders: readStringArray(raw.excludedFolders, DEFAULT_SETTINGS.excludedFolders),
+		skipTitlePrompt: readBoolean(raw.skipTitlePrompt, DEFAULT_SETTINGS.skipTitlePrompt),
 		rules: Array.isArray(raw.rules) ? raw.rules.map(parseRule) : [],
 	};
 }

@@ -1,4 +1,4 @@
-import type { App, Debouncer, EventRef, TAbstractFile } from "obsidian";
+import type { App, Debouncer, EventRef, TAbstractFile, TFile } from "obsidian";
 import { debounce, TFolder } from "obsidian";
 import { isUntitled } from "../core/filename";
 import { basenameOf, isExcluded } from "../core/path";
@@ -7,10 +7,18 @@ import { isStaticTemplate } from "../core/template";
 import type { TitlerEngine } from "../services/titler";
 import type { NoteTracker } from "../services/tracker";
 import type { TitlerSettings } from "../types";
+import { focusNoteBody } from "./editor-focus";
 import { isMarkdownFile, toNoteRef } from "./files";
 
 /** How long to let Obsidian settle before naming a note from a static rule. */
 const CREATE_SETTLE_MS = 100;
+
+/**
+ * When to reach for the editor of a new note, in milliseconds after it appears.
+ * The first attempt is late enough to land after Obsidian has focused the
+ * title; the rest cover a slow open, and stop as soon as one of them lands.
+ */
+const FOCUS_ATTEMPTS_MS = [100, 250, 500] as const;
 
 /**
  * What the watcher needs from the plugin. Declared structurally so the watcher
@@ -114,11 +122,26 @@ export class Watcher {
 		this.host.tracker.claim(file.path, file.basename);
 		this.host.persistSoon();
 
+		if (this.host.settings.skipTitlePrompt) this.focusBody(file);
+
 		// A rule that ignores {{title}} can name the note right away; anything
 		// else has to wait until the note actually has content.
 		const rule = matchRule(file.path, this.host.settings.rules);
 		if (!rule || !isStaticTemplate(rule.template)) return;
 		this.defer(() => void this.host.engine.evaluate(toNoteRef(file), ""), CREATE_SETTLE_MS);
+	}
+
+	/**
+	 * Moves the caret into a new note's body, retrying while the note has yet to
+	 * open. Retrying only after a miss keeps a later attempt from pulling focus
+	 * back out of a title the user chose to write in themselves.
+	 */
+	private focusBody(file: TFile, attempt = 0): void {
+		const delay = FOCUS_ATTEMPTS_MS[attempt];
+		if (delay === undefined) return;
+		this.defer(() => {
+			if (!focusNoteBody(this.host.app, file)) this.focusBody(file, attempt + 1);
+		}, delay);
 	}
 
 	private onRename(file: TAbstractFile, oldPath: string): void {

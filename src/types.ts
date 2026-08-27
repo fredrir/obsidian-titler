@@ -24,6 +24,8 @@ export interface TitlerSettings {
 	untitledBase: string;
 	/** Folders Titler never touches. */
 	excludedFolders: string[];
+	/** Whether a new note opens with the caret in its body rather than its title. */
+	skipTitlePrompt: boolean;
 	rules: FolderRule[];
 }
 
