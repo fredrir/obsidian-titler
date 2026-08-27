@@ -1,5 +1,5 @@
-import { MarkdownView, TFile } from "obsidian";
 import type { App } from "obsidian";
+import { MarkdownView, TFile } from "obsidian";
 import type { VaultPort } from "../services/ports";
 import type { NoteRef } from "../types";
 

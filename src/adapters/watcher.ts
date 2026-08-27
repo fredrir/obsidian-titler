@@ -1,11 +1,11 @@
-import { debounce, TFolder } from "obsidian";
 import type { App, Debouncer, EventRef, TAbstractFile } from "obsidian";
+import { debounce, TFolder } from "obsidian";
 import { isUntitled } from "../core/filename";
 import { basenameOf, isExcluded } from "../core/path";
 import { matchRule } from "../core/rules";
 import { isStaticTemplate } from "../core/template";
-import type { NoteTracker } from "../services/tracker";
 import type { TitlerEngine } from "../services/titler";
+import type { NoteTracker } from "../services/tracker";
 import type { TitlerSettings } from "../types";
 import { isMarkdownFile, toNoteRef } from "./files";
 

@@ -1,4 +1,4 @@
-import { sanitizeFilename, isUntitled, uniqueBasename } from "../core/filename";
+import { isUntitled, sanitizeFilename, uniqueBasename } from "../core/filename";
 import { isOptedOut, splitFrontmatter } from "../core/frontmatter";
 import { folderOf, isExcluded, joinPath, parentFolderName } from "../core/path";
 import { matchRule } from "../core/rules";

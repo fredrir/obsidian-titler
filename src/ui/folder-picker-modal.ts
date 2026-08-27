@@ -1,5 +1,5 @@
-import { FuzzySuggestModal, TFolder } from "obsidian";
 import type { App } from "obsidian";
+import { FuzzySuggestModal, TFolder } from "obsidian";
 
 /** The empty string stands for the vault root throughout the settings. */
 export const VAULT_ROOT = "";

@@ -29,7 +29,11 @@ export class TitlerSettingTab extends PluginSettingTab {
 			"Words to use without a heading",
 			"How many opening words become the filename when the note has no heading.",
 		);
-		this.addSlider("maxLength", "Maximum filename length", "Longer titles are cut at the last whole word that fits.");
+		this.addSlider(
+			"maxLength",
+			"Maximum filename length",
+			"Longer titles are cut at the last whole word that fits.",
+		);
 		this.addUntitledBase();
 		this.addExcludedFolders();
 		this.addRules();

@@ -1,11 +1,11 @@
-import { debounce, moment, Plugin } from "obsidian";
 import type { App, Debouncer, PluginManifest } from "obsidian";
+import { debounce, moment, Plugin } from "obsidian";
 import { ObsidianVault } from "./adapters/obsidian-vault";
 import { Watcher } from "./adapters/watcher";
 import { registerCommands } from "./commands";
-import { defaultSettings, parseSettings, parseTrackedNotes } from "./settings";
 import { TitlerEngine } from "./services/titler";
 import { NoteTracker } from "./services/tracker";
+import { defaultSettings, parseSettings, parseTrackedNotes } from "./settings";
 import type { FormatDate, PersistedData, TitlerSettings } from "./types";
 import { TitlerSettingTab } from "./ui/settings-tab";
 
@@ -15,7 +15,7 @@ const SAVE_DEBOUNCE_MS = 2000;
 const formatDate: FormatDate = (timestamp, format) => moment(timestamp).format(format);
 
 export default class TitlerPlugin extends Plugin {
-	settings: TitlerSettings = defaultSettings();
+	override settings: TitlerSettings = defaultSettings();
 	readonly tracker = new NoteTracker();
 	readonly vault: ObsidianVault;
 	readonly engine: TitlerEngine;

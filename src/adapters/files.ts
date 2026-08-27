@@ -1,5 +1,5 @@
-import { TFile } from "obsidian";
 import type { TAbstractFile } from "obsidian";
+import { TFile } from "obsidian";
 import { MARKDOWN_EXTENSION } from "../core/path";
 import type { NoteRef } from "../types";
 

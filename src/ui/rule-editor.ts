@@ -1,5 +1,5 @@
-import { moment, Setting } from "obsidian";
 import type { App } from "obsidian";
+import { moment, Setting } from "obsidian";
 import { sanitizeFilename } from "../core/filename";
 import { normalizeFolder } from "../core/path";
 import { applyTemplate, DEFAULT_TEMPLATE } from "../core/template";

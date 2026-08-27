@@ -1,5 +1,5 @@
-import { Notice } from "obsidian";
 import type { TFile } from "obsidian";
+import { Notice } from "obsidian";
 import { toNoteRef } from "../adapters/files";
 import type TitlerPlugin from "../main";
 import type { SkipReason, TitlingResult } from "../services/titler";

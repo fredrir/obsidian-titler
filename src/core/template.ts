@@ -17,7 +17,10 @@ export function isStaticTemplate(template: string): boolean {
 /** Replaces `{{title}}`, `{{parent}}` and `{{date:FORMAT}}`; leaves the rest alone. */
 export function applyTemplate(template: string, values: TemplateValues): string {
 	const source = template || DEFAULT_TEMPLATE;
-	return source.replace(TOKEN, (match, token: string, format?: string) => renderToken(token, format, values) ?? match);
+	return source.replace(
+		TOKEN,
+		(match, token: string, format?: string) => renderToken(token, format, values) ?? match,
+	);
 }
 
 function renderToken(token: string, format: string | undefined, values: TemplateValues): string | null {

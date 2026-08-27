@@ -1,5 +1,5 @@
-import type { TrackedNotes } from "../types";
 import { toTrackedNotes } from "../settings";
+import type { TrackedNotes } from "../types";
 
 /**
  * The notes Titler is allowed to rename, together with the basename it last

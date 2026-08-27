@@ -48,7 +48,7 @@ describe("parseTrackedNotes", () => {
 		const claims = parseTrackedNotes(JSON.parse('{"__proto__": "pwned"}'));
 		const record = toTrackedNotes(claims);
 		expect(Object.getPrototypeOf(record)).toBe(Object.prototype);
-		expect(({} as Record<string, unknown>)["pwned"]).toBeUndefined();
+		expect(({} as Record<string, unknown>).pwned).toBeUndefined();
 	});
 
 	test("round-trips through the persisted shape", () => {

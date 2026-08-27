@@ -106,5 +106,8 @@ function readNumber(value: unknown, fallback: number, range: NumericRange): numb
 
 function readStringArray(value: unknown, fallback: readonly string[]): string[] {
 	if (!Array.isArray(value)) return [...fallback];
-	return value.filter((entry): entry is string => typeof entry === "string").map((entry) => entry.trim()).filter(Boolean);
+	return value
+		.filter((entry): entry is string => typeof entry === "string")
+		.map((entry) => entry.trim())
+		.filter(Boolean);
 }
