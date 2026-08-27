@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { DEFAULT_RULE } from "../settings";
-import type { FolderRule } from "../types";
-import { matchRule } from "./rules";
+import { DEFAULT_RULE } from "../../settings";
+import type { FolderRule } from "../../types";
+import { matchRule } from "../rules";
 
 const rule = (overrides: Partial<FolderRule>): FolderRule => ({ ...DEFAULT_RULE, ...overrides });
 

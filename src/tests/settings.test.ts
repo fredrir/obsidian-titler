@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { DEFAULT_RULE, DEFAULT_SETTINGS, parseSettings, parseTrackedNotes, toTrackedNotes } from "./settings";
+import { DEFAULT_RULE, DEFAULT_SETTINGS, parseSettings, parseTrackedNotes, toTrackedNotes } from "../settings";
 
 describe("parseSettings", () => {
 	test("fills in everything that is missing", () => {

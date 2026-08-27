@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { sanitizeFilename } from "./filename";
-import { deriveTitle } from "./title";
+import { sanitizeFilename } from "../filename";
+import { deriveTitle } from "../title";
 
 const lines = (...parts: string[]): string => parts.join("\n");
 

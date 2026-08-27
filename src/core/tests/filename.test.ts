@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isUntitled, sanitizeFilename, uniqueBasename } from "./filename";
+import { isUntitled, sanitizeFilename, uniqueBasename } from "../filename";
 
 describe("sanitizeFilename", () => {
 	test("drops characters that break paths or wikilinks", () => {

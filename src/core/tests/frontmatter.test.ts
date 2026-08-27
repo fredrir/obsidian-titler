@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isOptedOut, splitFrontmatter } from "./frontmatter";
+import { isOptedOut, splitFrontmatter } from "../frontmatter";
 
 const lines = (...parts: string[]): string => parts.join("\n");
 

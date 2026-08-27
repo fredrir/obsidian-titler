@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import { NoteTracker } from "./tracker";
+import { NoteTracker } from "../tracker";
 
 describe("NoteTracker", () => {
 	let tracker: NoteTracker;

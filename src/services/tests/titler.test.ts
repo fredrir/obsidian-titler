@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import { DEFAULT_RULE, DEFAULT_SETTINGS } from "../settings";
-import type { NoteRef, TitlerSettings } from "../types";
-import type { VaultPort } from "./ports";
-import { TitlerEngine } from "./titler";
-import { NoteTracker } from "./tracker";
+import { DEFAULT_RULE, DEFAULT_SETTINGS } from "../../settings";
+import type { NoteRef, TitlerSettings } from "../../types";
+import type { VaultPort } from "../ports";
+import { TitlerEngine } from "../titler";
+import { NoteTracker } from "../tracker";
 
 /** An in-memory vault: path to note text. */
 class FakeVault implements VaultPort {

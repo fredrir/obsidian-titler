@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import type { TemplateValues } from "../types";
-import { applyTemplate, isStaticTemplate } from "./template";
+import type { TemplateValues } from "../../types";
+import { applyTemplate, isStaticTemplate } from "../template";
 
 const values: TemplateValues = {
 	title: "My note",

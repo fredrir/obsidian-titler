@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { cleanInline, firstWords, stripControlCharacters, stripLineMarkers } from "./text";
+import { cleanInline, firstWords, stripControlCharacters, stripLineMarkers } from "../text";
 
 describe("stripLineMarkers", () => {
 	test("unwraps nested prefixes", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { basenameOf, folderOf, isExcluded, joinPath, normalizeFolder, parentFolderName } from "./path";
+import { basenameOf, folderOf, isExcluded, joinPath, normalizeFolder, parentFolderName } from "../path";
 
 describe("path helpers", () => {
 	test("folderOf splits a vault path", () => {
