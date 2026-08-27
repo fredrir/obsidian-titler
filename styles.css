@@ -1,21 +1,17 @@
-.titler-rule {
-	border: 1px solid var(--background-modifier-border);
-	border-radius: var(--radius-m);
-	padding: 0 var(--size-4-3);
-	margin-bottom: var(--size-4-3);
-}
-
-.titler-rule .setting-item:last-child {
-	border-bottom: none;
-}
-
 .titler-preview {
 	color: var(--text-muted);
 	font-family: var(--font-monospace);
 	font-size: var(--font-ui-smaller);
 }
 
+/* A switched-off rule keeps its place in the list, faded. */
+.titler-rule-off .setting-item-name,
+.titler-rule-off .setting-item-description {
+	opacity: 0.5;
+}
+
 .titler-empty {
 	color: var(--text-muted);
-	margin-bottom: var(--size-4-3);
+	font-size: var(--font-ui-smaller);
+	margin: 0 0 var(--size-4-3);
 }

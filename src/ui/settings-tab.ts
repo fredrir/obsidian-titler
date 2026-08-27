@@ -1,16 +1,11 @@
 import { PluginSettingTab, Setting } from "obsidian";
 import type TitlerPlugin from "../main";
-import { createRule, DEFAULT_SETTINGS, SETTING_RANGES } from "../settings";
+import { DEFAULT_SETTINGS, SETTING_RANGES } from "../settings";
 import type { TitlerSettings } from "../types";
-import { renderRuleEditor } from "./rule-editor";
+import { renderRuleList } from "./rule-list";
 
 /** The settings whose bounds come from {@link SETTING_RANGES}. */
 type SliderSetting = keyof typeof SETTING_RANGES;
-
-const TOKEN_HELP =
-	"Tokens: {{title}} for the derived title, {{date:FORMAT}} for the note's creation time, " +
-	"{{parent}} for the folder name. A rule without {{title}} is applied once when the note is " +
-	"created and then left alone.";
 
 export class TitlerSettingTab extends PluginSettingTab {
 	constructor(private readonly plugin: TitlerPlugin) {
@@ -106,36 +101,14 @@ export class TitlerSettingTab extends PluginSettingTab {
 	}
 
 	private addRules(): void {
-		new Setting(this.containerEl).setName("Folder rules").setHeading();
-		this.containerEl.createEl("p", { cls: "titler-empty", text: TOKEN_HELP });
-
-		this.settings.rules.forEach((rule, index) => {
-			renderRuleEditor({
-				container: this.containerEl,
-				app: this.plugin.app,
-				rule,
-				index,
-				maxLength: this.settings.maxLength,
-				onChange: () => this.commit(),
-				onRemove: async () => {
-					this.settings.rules.splice(index, 1);
-					await this.commit();
-					this.display();
-				},
-				onRedraw: () => this.display(),
-			});
+		renderRuleList({
+			container: this.containerEl,
+			app: this.plugin.app,
+			rules: this.settings.rules,
+			maxLength: this.settings.maxLength,
+			onChange: () => this.commit(),
+			onRedraw: () => this.display(),
 		});
-
-		new Setting(this.containerEl).addButton((button) =>
-			button
-				.setButtonText("Add rule")
-				.setCta()
-				.onClick(async () => {
-					this.settings.rules.push(createRule());
-					await this.commit();
-					this.display();
-				}),
-		);
 	}
 
 	private async commit(): Promise<void> {
