@@ -9,6 +9,7 @@ import type { NoteTracker } from "../services/tracker";
 import type { TitlerSettings } from "../types";
 import { focusNoteBody } from "./editor-focus";
 import { isMarkdownFile, toNoteRef } from "./files";
+import { skipTitlePromptWhen } from "./title-prompt";
 
 /** How long to let Obsidian settle before naming a note from a static rule. */
 const CREATE_SETTLE_MS = 100;
@@ -19,6 +20,9 @@ const CREATE_SETTLE_MS = 100;
  * title; the rest cover a slow open, and stop as soon as one of them lands.
  */
 const FOCUS_ATTEMPTS_MS = [100, 250, 500] as const;
+
+/** How long after it appears a new note may skip Obsidian's title prompt. */
+const FRESH_NOTE_MS = 1000;
 
 /**
  * What the watcher needs from the plugin. Declared structurally so the watcher
@@ -44,6 +48,7 @@ export interface TitlerHost {
  */
 export class Watcher {
 	private readonly pending = new Map<string, string>();
+	private readonly freshNotes = new Set<string>();
 	private readonly timers = new Set<number>();
 	private flushSoon: Debouncer<[], void>;
 
@@ -76,6 +81,7 @@ export class Watcher {
 		this.host.registerEvent(app.vault.on("rename", (file, oldPath) => this.onRename(file, oldPath)));
 		this.host.registerEvent(app.vault.on("delete", (file) => this.onDelete(file)));
 		this.host.registerEvent(app.workspace.on("active-leaf-change", () => this.flush()));
+		this.host.register(skipTitlePromptWhen(app, (file) => this.freshNotes.delete(file.path)));
 
 		this.host.register(() => this.stop());
 		app.workspace.onLayoutReady(() => this.pruneClaims());
@@ -97,6 +103,7 @@ export class Watcher {
 		for (const timer of this.timers) window.clearTimeout(timer);
 		this.timers.clear();
 		this.pending.clear();
+		this.freshNotes.clear();
 	}
 
 	private createFlushDebouncer(): Debouncer<[], void> {
@@ -117,18 +124,23 @@ export class Watcher {
 		// Obsidian replays creation events for the whole vault on startup.
 		if (!this.host.app.workspace.layoutReady || !isMarkdownFile(file)) return;
 		if (isExcluded(file.path, this.host.settings.excludedFolders)) return;
+		if (this.host.settings.skipTitlePrompt) this.startInBody(file);
 		if (!isUntitled(file.basename, this.host.settings.untitledBase)) return;
 
 		this.host.tracker.claim(file.path, file.basename);
 		this.host.persistSoon();
-
-		if (this.host.settings.skipTitlePrompt) this.focusBody(file);
 
 		// A rule that ignores {{title}} can name the note right away; anything
 		// else has to wait until the note actually has content.
 		const rule = matchRule(file.path, this.host.settings.rules);
 		if (!rule || !isStaticTemplate(rule.template)) return;
 		this.defer(() => void this.host.engine.evaluate(toNoteRef(file), ""), CREATE_SETTLE_MS);
+	}
+
+	private startInBody(file: TFile): void {
+		this.freshNotes.add(file.path);
+		this.defer(() => this.freshNotes.delete(file.path), FRESH_NOTE_MS);
+		this.focusBody(file);
 	}
 
 	/**

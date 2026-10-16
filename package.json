@@ -27,5 +27,8 @@
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.68.0",
 		"vitest": "^4.1.11"
+	},
+	"dependencies": {
+		"monkey-around": "^3.0.0"
 	}
 }
