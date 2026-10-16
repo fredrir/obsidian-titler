@@ -2,7 +2,7 @@
 	"id": "obsidian-titler",
 	"name": "Titler",
 	"version": "1.0.0",
-	"minAppVersion": "1.4.0",
+	"minAppVersion": "1.7.2",
 	"description": "Names untitled notes from their first heading or opening words, with folder-scoped naming rules.",
 	"author": "fredrir",
 	"isDesktopOnly": false

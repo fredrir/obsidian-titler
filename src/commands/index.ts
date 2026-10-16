@@ -1,5 +1,6 @@
 import type { TFile } from "obsidian";
 import { Notice } from "obsidian";
+import { findExplorerRenameTarget, renameInExplorer } from "../adapters/file-explorer";
 import { isMarkdownFile } from "../adapters/files";
 import type TitlerPlugin from "../main";
 import { retitleNote } from "./retitle";
@@ -32,6 +33,17 @@ export function registerCommands(plugin: TitlerPlugin): void {
 				plugin.persistSoon();
 				new Notice(`Titler is following "${file.basename}"`);
 			}),
+	});
+
+	plugin.addCommand({
+		id: "rename-in-explorer",
+		name: "Rename in file explorer",
+		checkCallback: (checking) => {
+			const target = findExplorerRenameTarget(plugin.app);
+			if (!target) return false;
+			if (!checking) void renameInExplorer(plugin.app, target);
+			return true;
+		},
 	});
 
 	plugin.registerEvent(
