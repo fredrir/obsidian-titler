@@ -7,6 +7,8 @@ import { renderRuleList } from "./rule-list";
 /** The settings whose bounds come from {@link SETTING_RANGES}. */
 type SliderSetting = keyof typeof SETTING_RANGES;
 
+type FolderListSetting = "excludedFolders" | "revealExcludedFolders";
+
 export class TitlerSettingTab extends PluginSettingTab {
 	constructor(private readonly plugin: TitlerPlugin) {
 		super(plugin.app, plugin);
@@ -31,7 +33,16 @@ export class TitlerSettingTab extends PluginSettingTab {
 		);
 		this.addUntitledBase();
 		this.addSkipTitlePrompt();
-		this.addExcludedFolders();
+		this.addFolderList(
+			"excludedFolders",
+			"Excluded folders",
+			"One per line. A bare name like _Agents matches that folder anywhere in the vault.",
+		);
+		this.addFolderList(
+			"revealExcludedFolders",
+			"Auto-reveal excluded folders",
+			"The file explorer won't expand these to reveal the active note. One per line.",
+		);
 		this.addRules();
 	}
 
@@ -84,14 +95,14 @@ export class TitlerSettingTab extends PluginSettingTab {
 			);
 	}
 
-	private addExcludedFolders(): void {
+	private addFolderList(key: FolderListSetting, name: string, description: string): void {
 		new Setting(this.containerEl)
-			.setName("Excluded folders")
-			.setDesc("One per line. A bare name like _Agents matches that folder anywhere in the vault.")
+			.setName(name)
+			.setDesc(description)
 			.addTextArea((area) => {
 				area.inputEl.rows = 4;
-				area.setValue(this.settings.excludedFolders.join("\n")).onChange(async (value) => {
-					this.settings.excludedFolders = value
+				area.setValue(this.settings[key].join("\n")).onChange(async (value) => {
+					this.settings[key] = value
 						.split("\n")
 						.map((line) => line.trim())
 						.filter(Boolean);

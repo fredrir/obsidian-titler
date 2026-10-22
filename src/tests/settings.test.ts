@@ -24,6 +24,7 @@ describe("parseSettings", () => {
 	test("an explicitly empty exclusion list is respected", () => {
 		expect(parseSettings({ excludedFolders: [] }).excludedFolders).toEqual([]);
 		expect(parseSettings({ excludedFolders: ["  a  ", "", 7] }).excludedFolders).toEqual(["a"]);
+		expect(parseSettings({ revealExcludedFolders: [] }).revealExcludedFolders).toEqual([]);
 	});
 
 	test("the title-prompt toggle only bends to a real boolean", () => {

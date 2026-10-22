@@ -31,6 +31,7 @@ export const DEFAULT_SETTINGS: TitlerSettings = {
 	maxLength: 60,
 	untitledBase: "Untitled",
 	excludedFolders: ["Transcripts", "Obsidian/Templates", "Obsidian/Attachments"],
+	revealExcludedFolders: ["Obsidian/Tmp"],
 	skipTitlePrompt: true,
 	rules: [],
 };
@@ -41,7 +42,12 @@ export function createRule(): FolderRule {
 
 /** A fresh copy of the defaults, safe to mutate without touching the originals. */
 export function defaultSettings(): TitlerSettings {
-	return { ...DEFAULT_SETTINGS, excludedFolders: [...DEFAULT_SETTINGS.excludedFolders], rules: [] };
+	return {
+		...DEFAULT_SETTINGS,
+		excludedFolders: [...DEFAULT_SETTINGS.excludedFolders],
+		revealExcludedFolders: [...DEFAULT_SETTINGS.revealExcludedFolders],
+		rules: [],
+	};
 }
 
 /** Rebuilds settings from whatever `loadData()` returned, clamped and complete. */
@@ -53,6 +59,7 @@ export function parseSettings(value: unknown): TitlerSettings {
 		maxLength: readNumber(raw.maxLength, DEFAULT_SETTINGS.maxLength, SETTING_RANGES.maxLength),
 		untitledBase: readNonEmptyString(raw.untitledBase, DEFAULT_SETTINGS.untitledBase),
 		excludedFolders: readStringArray(raw.excludedFolders, DEFAULT_SETTINGS.excludedFolders),
+		revealExcludedFolders: readStringArray(raw.revealExcludedFolders, DEFAULT_SETTINGS.revealExcludedFolders),
 		skipTitlePrompt: readBoolean(raw.skipTitlePrompt, DEFAULT_SETTINGS.skipTitlePrompt),
 		rules: Array.isArray(raw.rules) ? raw.rules.map(parseRule) : [],
 	};

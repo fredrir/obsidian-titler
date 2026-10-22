@@ -1,8 +1,10 @@
 import type { App, Debouncer, PluginManifest } from "obsidian";
 import { debounce, moment, Plugin } from "obsidian";
+import { skipAutoRevealWhen } from "./adapters/file-explorer";
 import { ObsidianVault } from "./adapters/obsidian-vault";
 import { Watcher } from "./adapters/watcher";
 import { registerCommands } from "./commands";
+import { isExcluded } from "./core/path";
 import { TitlerEngine } from "./services/titler";
 import { NoteTracker } from "./services/tracker";
 import { defaultSettings, parseSettings, parseTrackedNotes } from "./settings";
@@ -45,6 +47,7 @@ export default class TitlerPlugin extends Plugin {
 
 		this.watcher.refresh();
 		this.watcher.start();
+		skipAutoRevealWhen(this, (path) => isExcluded(path, this.settings.revealExcludedFolders));
 		this.addSettingTab(new TitlerSettingTab(this));
 		registerCommands(this);
 	}

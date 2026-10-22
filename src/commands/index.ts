@@ -1,6 +1,6 @@
 import type { TFile } from "obsidian";
 import { Notice } from "obsidian";
-import { findExplorerRenameTarget, renameInExplorer } from "../adapters/file-explorer";
+import { findExplorerRenameTarget, findExplorerTree, renameInExplorer } from "../adapters/file-explorer";
 import { isMarkdownFile } from "../adapters/files";
 import type TitlerPlugin from "../main";
 import { retitleNote } from "./retitle";
@@ -42,6 +42,17 @@ export function registerCommands(plugin: TitlerPlugin): void {
 			const target = findExplorerRenameTarget(plugin.app);
 			if (!target) return false;
 			if (!checking) void renameInExplorer(plugin.app, target);
+			return true;
+		},
+	});
+
+	plugin.addCommand({
+		id: "collapse-explorer",
+		name: "Collapse all in file explorer",
+		checkCallback: (checking) => {
+			const tree = findExplorerTree(plugin.app);
+			if (!tree) return false;
+			if (!checking) tree.setCollapseAll(true);
 			return true;
 		},
 	});
